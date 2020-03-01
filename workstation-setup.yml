@@ -1,0 +1,76 @@
+--- # Add packages that I use on my Fedora workstation, requires the installation of ansible and starting of openssh-server before it can actually be run
+- name: "Local configuration with ansible"
+  hosts: 127.0.0.1
+  connection: local
+  become: yes
+  tasks:
+  - name: "install software development tools"
+    dnf:
+      name: 
+      - vim-enhanced
+      - git
+      state: latest
+  - name: "install graphics tools"
+    dnf: 
+      name: 
+        - krita
+        - blender
+        - gimp
+        - inkscape
+      state: latest
+  - name: "install audio applications"
+    dnf:
+      name:
+        - audacity
+        - hydrogen
+        - soundkonverter
+        - pavucontrol
+      state: latest
+  - name: "install sysadmin tools"
+    dnf:
+      name: 
+        - x2goclient
+        - remmina
+        - seahorse
+        - perl-YUM-RepoQuery
+        - etckeeper-dnf
+        - virt-manager
+        - snapd
+        - xrdp
+      state: latest
+  - name: "packages needed to watch LinuxAcademy videos in Firefox."
+    dnf:
+      name:
+        ffmpeg-libs
+      state: latest
+  - name: "install packages for office and desktop publishing"
+    dnf:
+      name:
+        - scribus
+      state: latest
+  - name: "install security tools"
+    dnf:
+      name: 
+        - 'https://spideroak.com/dist/encryptr/signed/linux/rpm/encryptr-2.0.0-1.x86_64.rpm'
+      state: latest
+  - name: "install communications tools"
+    dnf:
+      name:
+        - telegram-desktop
+          #     - 'https://downloads.slack-edge.com/linux_releases/slack-4.3.2-0.1.fc21.x86_64.rpm'
+      state: latest
+      #    snap:
+      # name:
+      #   - slack
+      # state: present
+  - name: "install multimedia processing packages"
+    dnf:
+      name: 
+        - HandBrake-gui
+        - youtube-dl
+      state: latest
+  - name: "install additional browsers"
+    dnf:
+      name:
+        - chromium
+      state: latest
