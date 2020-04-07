@@ -4,6 +4,13 @@
   connection: local
   become: yes
   tasks:
+  - name: "Enable fedora-cisco-openh264 for totem"
+    dnf:
+      enablerepo: fedora-cisco-openh264
+      name:
+        - gstreamer1-plugin-openh264
+        - mozilla-openh264
+      state: latest
   - name: "install software development tools"
     dnf:
       name: 
@@ -37,6 +44,8 @@
         - virt-manager
         - snapd
         - xrdp
+        - openconnect
+        - NetworkManager-openconnect-gnome
       state: latest
   - name: "packages needed to watch LinuxAcademy videos in Firefox."
     dnf:
@@ -57,7 +66,7 @@
     dnf:
       name:
         - telegram-desktop
-          #     - 'https://downloads.slack-edge.com/linux_releases/slack-4.3.2-0.1.fc21.x86_64.rpm'
+        - 'https://downloads.slack-edge.com/linux_releases/slack-4.3.2-0.1.fc21.x86_64.rpm'
       state: latest
       #    snap:
       # name:
@@ -68,9 +77,12 @@
       name: 
         - HandBrake-gui
         - youtube-dl
+        - 'https://dl.google.com/linux/direct/google-musicmanager-beta_current_x86_64.rpm'
+        - obs-studio
       state: latest
   - name: "install additional browsers"
     dnf:
       name:
-        - chromium
+       # - chromium
+        - chromium-libs-media-freeworld
       state: latest
