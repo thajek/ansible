@@ -17,6 +17,10 @@
       - vim-enhanced
       - git
       state: latest
+  - name: "install games"
+    dnf:
+      name:
+      - steam
   - name: "install graphics tools"
     dnf: 
       name: 
@@ -24,6 +28,8 @@
         - blender
         - gimp
         - inkscape
+        - avidemux
+        - rapid-photo-downloader
       state: latest
   - name: "install audio applications"
     dnf:
@@ -46,6 +52,11 @@
         - xrdp
         - openconnect
         - NetworkManager-openconnect-gnome
+        - pyhoca-gui
+        - pyhoca-cli
+        - wireshark
+        - inxi
+        - apg
       state: latest
   - name: "packages needed to watch LinuxAcademy videos in Firefox."
     dnf:
