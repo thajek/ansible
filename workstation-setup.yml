@@ -58,6 +58,11 @@
         - inxi
         - apg
       state: latest
+  - name: "install backup applications"
+    dnf:
+      name:
+        - restic
+      state: latest
   - name: "packages needed to watch LinuxAcademy videos in Firefox."
     dnf:
       name:
