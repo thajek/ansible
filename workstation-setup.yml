@@ -57,6 +57,7 @@
         - wireshark
         - inxi
         - apg
+        - rpmconf
       state: latest
   - name: "install backup applications"
     dnf:
