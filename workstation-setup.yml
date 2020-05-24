@@ -30,6 +30,7 @@
         - inkscape
         - avidemux
         - rapid-photo-downloader
+        - hplip-gui
       state: latest
   - name: "install audio applications"
     dnf:
