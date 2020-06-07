@@ -76,6 +76,7 @@
         - inxi
         - apg
         - rpmconf
+        - nfs4-acl-tools
       state: latest
   - name: "install backup applications"
     dnf:
