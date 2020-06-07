@@ -16,6 +16,10 @@
       name: 
       - vim-enhanced
       - git
+      - icedtea-web
+      - java-1.8.0-openjdk-headless
+      - java-1.8.0-openjdk
+      - java-1.8.0-openjdk-devel
       state: latest
   - name: "install games"
     dnf:
@@ -25,13 +29,26 @@
     dnf: 
       name: 
         - krita
-        - blender
+          #  - blender
         - gimp
         - inkscape
         - avidemux
         - rapid-photo-downloader
         - hplip-gui
       state: latest
+  - name: "Create /snap symlink on Fedora to allow classic confinement snaps to install"
+    file:
+      src: /var/lib/snapd/snap
+      dest: /snap
+      state: link
+    when: ansible_distribution == 'Fedora'
+
+  - name: "install blender via snap package"
+    snap:
+      name: blender
+      state: present
+      channel: stable
+      classic: yes
   - name: "install audio applications"
     dnf:
       name:
@@ -85,6 +102,7 @@
       name:
         - telegram-desktop
         - 'https://downloads.slack-edge.com/linux_releases/slack-4.3.2-0.1.fc21.x86_64.rpm'
+        - hexchat
       state: latest
       #    snap:
       # name:
@@ -102,5 +120,6 @@
     dnf:
       name:
        # - chromium
-        - chromium-libs-media-freeworld
+       # - chromium-libs-media-freeworld
+        - chromium-freeworld
       state: latest
