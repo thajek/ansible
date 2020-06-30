@@ -78,6 +78,7 @@
         - rpmconf
         - nfs4-acl-tools
         - sysstat
+        - smem
       state: latest
   - name: "install backup applications"
     dnf:
