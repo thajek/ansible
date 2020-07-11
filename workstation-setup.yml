@@ -79,6 +79,8 @@
         - nfs4-acl-tools
         - sysstat
         - smem
+        - exfat-utils
+        - fuse-exfat
       state: latest
   - name: "install backup applications"
     dnf:
