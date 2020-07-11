@@ -81,6 +81,7 @@
         - smem
         - exfat-utils
         - fuse-exfat
+        - hdparm
       state: latest
   - name: "install backup applications"
     dnf:
