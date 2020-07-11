@@ -82,6 +82,7 @@
         - exfat-utils
         - fuse-exfat
         - hdparm
+        - fio
       state: latest
   - name: "install backup applications"
     dnf:
