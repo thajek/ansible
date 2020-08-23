@@ -20,6 +20,7 @@
       - java-1.8.0-openjdk-headless
       - java-1.8.0-openjdk
       - java-1.8.0-openjdk-devel
+      - kernel-devel
       state: latest
   - name: "install games"
     dnf:
@@ -69,6 +70,7 @@
         - snapd
         - xrdp
         - openconnect
+        - nmap
         - NetworkManager-openconnect-gnome
         - pyhoca-gui
         - pyhoca-cli
