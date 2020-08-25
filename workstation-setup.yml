@@ -85,6 +85,7 @@
         - fuse-exfat
         - hdparm
         - fio
+        - meld
       state: latest
   - name: "install backup applications"
     dnf:
