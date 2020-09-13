@@ -86,6 +86,7 @@
         - hdparm
         - fio
         - meld
+        - smartmontools
       state: latest
   - name: "install backup applications"
     dnf:
