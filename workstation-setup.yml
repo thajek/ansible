@@ -36,6 +36,8 @@
         - avidemux
         - rapid-photo-downloader
         - hplip-gui
+        - jp2a
+        - asciio
       state: latest
   - name: "Create /snap symlink on Fedora to allow classic confinement snaps to install"
     file:
@@ -87,6 +89,8 @@
         - fio
         - meld
         - smartmontools
+        - fdupes
+        - lshw
       state: latest
   - name: "install backup applications"
     dnf:
