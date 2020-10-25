@@ -59,7 +59,16 @@
         - hydrogen
         - soundkonverter
         - pavucontrol
+        - pithos
       state: latest
+  - name: "install pulseaudio-module-bluetooth-freeworld for aptx support"
+    command: "dnf install -y pulseaudio-module-bluetooth-freeworld --allowerasing"
+      # With Ansible 2.10 allowerasing is a builtin
+      #    dnf:
+      #name:
+      #  - pulseaudio-module-bluetooth-freeworld
+      #state: latest
+      #allowerasing: yes
   - name: "install sysadmin tools"
     dnf:
       name: 
@@ -91,6 +100,8 @@
         - smartmontools
         - fdupes
         - lshw
+        - python3-ansible-lint
+        - ansible
       state: latest
   - name: "install backup applications"
     dnf:
