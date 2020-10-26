@@ -10,7 +10,7 @@
       name:
         - gstreamer1-plugin-openh264
         - mozilla-openh264
-      state: latest
+      state: present
   - name: "install software development tools"
     dnf:
       name: 
@@ -21,7 +21,7 @@
       - java-1.8.0-openjdk
       - java-1.8.0-openjdk-devel
       - kernel-devel
-      state: latest
+      state: present
   - name: "install games"
     dnf:
       name:
@@ -38,7 +38,12 @@
         - hplip-gui
         - jp2a
         - asciio
-      state: latest
+      state: present
+  - name: "install nvidia driver from rpmfusion"
+    dnf:
+      name: 
+        - akmod-nvidia
+      state: present
   - name: "Create /snap symlink on Fedora to allow classic confinement snaps to install"
     file:
       src: /var/lib/snapd/snap
@@ -60,14 +65,14 @@
         - soundkonverter
         - pavucontrol
         - pithos
-      state: latest
+      state: present
   - name: "install pulseaudio-module-bluetooth-freeworld for aptx support"
     command: "dnf install -y pulseaudio-module-bluetooth-freeworld --allowerasing"
       # With Ansible 2.10 allowerasing is a builtin
       #    dnf:
       #name:
       #  - pulseaudio-module-bluetooth-freeworld
-      #state: latest
+      #state: present
       #allowerasing: yes
   - name: "install sysadmin tools"
     dnf:
@@ -102,27 +107,32 @@
         - lshw
         - python3-ansible-lint
         - ansible
-      state: latest
+      state: present
   - name: "install backup applications"
     dnf:
       name:
         - restic
-      state: latest
+      state: present
   - name: "packages needed to watch LinuxAcademy videos in Firefox."
     dnf:
       name:
-        ffmpeg-libs
-      state: latest
+        - ffmpeg-libs
+      state: present
+  - name: "packages needed to watch SchedMD Slurm videos"
+    dnf:
+      name:
+        - schroedinger 
+      state: present
   - name: "install packages for office and desktop publishing"
     dnf:
       name:
         - scribus
-      state: latest
+      state: present
   - name: "install security tools"
     dnf:
       name: 
         - 'https://spideroak.com/dist/encryptr/signed/linux/rpm/encryptr-2.0.0-1.x86_64.rpm'
-      state: latest
+      state: present
   - name: "install communications tools"
     dnf:
       name:
@@ -130,7 +140,7 @@
         - 'https://downloads.slack-edge.com/linux_releases/slack-4.3.2-0.1.fc21.x86_64.rpm'
         - hexchat
         - 'https://packages.microsoft.com/yumrepos/ms-teams/teams-1.3.00.16851-1.x86_64.rpm'
-      state: latest
+      state: present
       #    snap:
       # name:
       #   - slack
@@ -142,11 +152,11 @@
         - youtube-dl
         - 'https://dl.google.com/linux/direct/google-musicmanager-beta_current_x86_64.rpm'
         - obs-studio
-      state: latest
+      state: present
   - name: "install additional browsers"
     dnf:
       name:
        # - chromium
        # - chromium-libs-media-freeworld
         - chromium-freeworld
-      state: latest
+      state: present
