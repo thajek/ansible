@@ -38,6 +38,9 @@
         - hplip-gui
         - jp2a
         - asciio
+        - photocollage
+        - ImageMagick
+        - GraphicsMagick
       state: present
   - name: "install nvidia driver from rpmfusion"
     dnf:
