@@ -68,14 +68,15 @@
         - pavucontrol
         - pithos
       state: present
-  - name: "install pulseaudio-module-bluetooth-freeworld for aptx support"
+  - name: "install pulseaudio-module-bluetooth-freeworld for aptx support (Ansible < 2.10)"
     command: "dnf install -y pulseaudio-module-bluetooth-freeworld --allowerasing"
-      # With Ansible 2.10 allowerasing is a builtin
-      #    dnf:
-      #name:
-      #  - pulseaudio-module-bluetooth-freeworld
-      #state: present
-      #allowerasing: yes
+    when: ansible_version.full < "2.10.0"
+  - name: "install pulseaudio-module-bluetooth-freeworld for aptx support (Ansible >= 2.10)"
+    dnf:
+      name: pulseaudio-module-bluetooth-freeworld
+      state: present
+      allowerasing: yes
+    when: ansible_version.full >= "2.10.0"
   - name: "install sysadmin tools"
     dnf:
       name:
