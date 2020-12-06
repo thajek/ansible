@@ -13,24 +13,23 @@
       state: present
   - name: "install software development tools"
     dnf:
-      name: 
-      - vim-enhanced
-      - git
-      - icedtea-web
-      - java-1.8.0-openjdk-headless
-      - java-1.8.0-openjdk
-      - java-1.8.0-openjdk-devel
-      - kernel-devel
+      name:
+        - vim-enhanced
+        - git
+        - icedtea-web
+        - java-1.8.0-openjdk-headless
+        - java-1.8.0-openjdk
+        - java-1.8.0-openjdk-devel
+        - kernel-devel
       state: present
   - name: "install games"
     dnf:
-      name:
-      - steam
+      name: steam
   - name: "install graphics tools"
-    dnf: 
-      name: 
+    dnf:
+      name:
         - krita
-          #  - blender
+        # - blender
         - gimp
         - inkscape
         - avidemux
@@ -44,7 +43,7 @@
       state: present
   - name: "install nvidia driver from rpmfusion"
     dnf:
-      name: 
+      name:
         - akmod-nvidia
       state: present
   - name: "Create /snap symlink on Fedora to allow classic confinement snaps to install"
@@ -69,17 +68,18 @@
         - pavucontrol
         - pithos
       state: present
-  - name: "install pulseaudio-module-bluetooth-freeworld for aptx support"
+  - name: "install pulseaudio-module-bluetooth-freeworld for aptx support (Ansible < 2.10)"
     command: "dnf install -y pulseaudio-module-bluetooth-freeworld --allowerasing"
-      # With Ansible 2.10 allowerasing is a builtin
-      #    dnf:
-      #name:
-      #  - pulseaudio-module-bluetooth-freeworld
-      #state: present
-      #allowerasing: yes
+    when: ansible_version.full < "2.10.0"
+  - name: "install pulseaudio-module-bluetooth-freeworld for aptx support (Ansible >= 2.10)"
+    dnf:
+      name: pulseaudio-module-bluetooth-freeworld
+      state: present
+      allowerasing: yes
+    when: ansible_version.full >= "2.10.0"
   - name: "install sysadmin tools"
     dnf:
-      name: 
+      name:
         - x2goclient
         - remmina
         - seahorse
@@ -113,28 +113,23 @@
       state: present
   - name: "install backup applications"
     dnf:
-      name:
-        - restic
+      name: restic
       state: present
   - name: "packages needed to watch LinuxAcademy videos in Firefox."
     dnf:
-      name:
-        - ffmpeg-libs
+      name: ffmpeg-libs
       state: present
   - name: "packages needed to watch SchedMD Slurm videos"
     dnf:
-      name:
-        - schroedinger 
+      name: schroedinger
       state: present
   - name: "install packages for office and desktop publishing"
     dnf:
-      name:
-        - scribus
+      name: scribus
       state: present
   - name: "install security tools"
     dnf:
-      name: 
-        - 'https://spideroak.com/dist/encryptr/signed/linux/rpm/encryptr-2.0.0-1.x86_64.rpm'
+      name: 'https://spideroak.com/dist/encryptr/signed/linux/rpm/encryptr-2.0.0-1.x86_64.rpm'
       state: present
   - name: "install communications tools"
     dnf:
@@ -150,7 +145,7 @@
       # state: present
   - name: "install multimedia processing packages"
     dnf:
-      name: 
+      name:
         - HandBrake-gui
         - youtube-dl
         - 'https://dl.google.com/linux/direct/google-musicmanager-beta_current_x86_64.rpm'
@@ -159,7 +154,7 @@
   - name: "install additional browsers"
     dnf:
       name:
-       # - chromium
-       # - chromium-libs-media-freeworld
+        # - chromium
+        # - chromium-libs-media-freeworld
         - chromium-freeworld
       state: present
