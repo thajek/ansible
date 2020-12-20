@@ -40,6 +40,7 @@
         - photocollage
         - ImageMagick
         - GraphicsMagick
+        - openshot
       state: present
   - name: "install nvidia driver from rpmfusion"
     dnf:
