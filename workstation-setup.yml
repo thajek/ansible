@@ -4,6 +4,63 @@
   connection: local
   become: yes
   tasks:
+  - name: Setup to install third party repos
+    dnf:
+      name:
+        - fedora-workstation-repositories
+      state: present
+  - name: check if google-chrome repo is enabled
+    shell:
+      cmd: dnf -C repolist enabled -v  | grep '^Repo-id' | awk '$3 == "google-chrome" {print "enabled"}'
+      warn: no
+    check_mode: no
+    changed_when: false
+    register: repo_google_chrome_enabled
+  - name: enable google-chrome repo
+    command: 
+      cmd: dnf config-manager --enable google-chrome
+      warn: no
+    when: repo_google_chrome_enabled.stdout == ''
+  - name: enable google-chrome repo and install Google Chrome
+    dnf:
+      #      enablerepo: google-chrome
+      name:
+       - google-chrome
+      state: present
+    # rpmfusion-nonfree-nvidia-driver.repo
+  - name: enable rpmfusion-nonfree-nvidia-driver repo
+    shell:
+      cmd: dnf -C repolist enabled -v  | grep '^Repo-id' | awk '$3 == "rpmfusion-nonfree-nvidia-driver" {print "enabled"}'
+      warn: no
+    check_mode: no
+    changed_when: false
+    register: repo_rpmfusion_nonfree_nvidia_driver_enabled
+  - name: enable rpmfusion-nonfree-nvidia-driver repo
+    command: 
+      cmd: dnf config-manager --enable rpmfusion-nonfree-nvidia-driver
+      warn: no
+    when: repo_rpmfusion_nonfree_nvidia_driver_enabled.stdout == ''
+  - name: enable rpmfusion-nonfree-steam repo
+    shell:
+      cmd: dnf -C repolist enabled -v  | grep '^Repo-id' | awk '$3 == "rpmfusion-nonfree-steam" {print "enabled"}'
+      warn: no
+    check_mode: no
+    changed_when: false
+    register: repo_rpmfusion_nonfree_steam_enabled
+  - name: enable rpmfusion-nonfree-steam and install Steam
+    dnf:
+      enablerepo: rpmfusion-nonfree-steam
+      name:
+        - steam
+      state: present
+  - name: Import rpmfushion gpg key from distribution-gpg-keys package
+    rpm_key:
+      state: present
+      key: "/usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-free-fedora-{{ ansible_distribution_major_version }}"
+  - name: Enable rpmfushion-free repo
+    dnf:
+      name: "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+      state: present
   - name: "Enable fedora-cisco-openh264 for totem"
     dnf:
       enablerepo: fedora-cisco-openh264
@@ -22,9 +79,6 @@
         - java-1.8.0-openjdk-devel
         - kernel-devel
       state: present
-  - name: "install games"
-    dnf:
-      name: steam
   - name: "install graphics tools"
     dnf:
       name:
@@ -35,7 +89,7 @@
         - avidemux
         - rapid-photo-downloader
         - hplip-gui
-        - jp2a
+          # unmaintained        - jp2a
         - asciio
         - photocollage
         - ImageMagick
@@ -47,19 +101,6 @@
       name:
         - akmod-nvidia
       state: present
-  - name: "Create /snap symlink on Fedora to allow classic confinement snaps to install"
-    file:
-      src: /var/lib/snapd/snap
-      dest: /snap
-      state: link
-    when: ansible_distribution == 'Fedora'
-
-  - name: "install blender via snap package"
-    snap:
-      name: blender
-      state: present
-      channel: stable
-      classic: yes
   - name: "install audio applications"
     dnf:
       name:
@@ -70,14 +111,16 @@
         - pithos
       state: present
   - name: "install pulseaudio-module-bluetooth-freeworld for aptx support (Ansible < 2.10)"
-    command: "dnf install -y pulseaudio-module-bluetooth-freeworld --allowerasing"
-    when: ansible_version.full < "2.10.0"
+    command: 
+      cmd: "dnf install -y pulseaudio-module-bluetooth-freeworld --allowerasing"
+      warn: no
+    when: ansible_version.full is version('2.10.0', '<') 
   - name: "install pulseaudio-module-bluetooth-freeworld for aptx support (Ansible >= 2.10)"
     dnf:
       name: pulseaudio-module-bluetooth-freeworld
       state: present
       allowerasing: yes
-    when: ansible_version.full >= "2.10.0"
+    when: ansible_version.full is version('2.10.0', '>=') 
   - name: "install sysadmin tools"
     dnf:
       name:
@@ -112,6 +155,19 @@
         - python3-ansible-lint
         - ansible
       state: present
+  - name: "Create /snap symlink on Fedora to allow classic confinement snaps to install"
+    file:
+      src: /var/lib/snapd/snap
+      dest: /snap
+      state: link
+    when: ansible_distribution == 'Fedora'
+
+  - name: "install blender via snap package"
+    snap:
+      name: blender
+      state: present
+      channel: stable
+      classic: yes
   - name: "install backup applications"
     dnf:
       name: restic
@@ -132,13 +188,19 @@
     dnf:
       name: 'https://spideroak.com/dist/encryptr/signed/linux/rpm/encryptr-2.0.0-1.x86_64.rpm'
       state: present
+      disable_gpg_check: yes
+  - name: "install communications tools - no gpg check"
+    dnf:
+      name:
+        - 'https://downloads.slack-edge.com/linux_releases/slack-4.12.0-0.1.fc21.x86_64.rpm'
+        - 'https://packages.microsoft.com/yumrepos/ms-teams/teams-1.3.00.16851-1.x86_64.rpm'
+      state: present
+      disable_gpg_check: yes
   - name: "install communications tools"
     dnf:
       name:
         - telegram-desktop
-        - 'https://downloads.slack-edge.com/linux_releases/slack-4.3.2-0.1.fc21.x86_64.rpm'
         - hexchat
-        - 'https://packages.microsoft.com/yumrepos/ms-teams/teams-1.3.00.16851-1.x86_64.rpm'
       state: present
       #    snap:
       # name:
@@ -149,7 +211,7 @@
       name:
         - HandBrake-gui
         - youtube-dl
-        - 'https://dl.google.com/linux/direct/google-musicmanager-beta_current_x86_64.rpm'
+          #        - 'https://dl.google.com/linux/direct/google-musicmanager-beta_current_x86_64.rpm'
         - obs-studio
       state: present
   - name: "install additional browsers"
