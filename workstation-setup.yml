@@ -25,7 +25,7 @@
     dnf:
       #      enablerepo: google-chrome
       name:
-       - google-chrome
+       - google-chrome-stable
       state: present
     # rpmfusion-nonfree-nvidia-driver.repo
   - name: enable rpmfusion-nonfree-nvidia-driver repo
