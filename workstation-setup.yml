@@ -79,6 +79,10 @@
         - java-1.8.0-openjdk-devel
         - kernel-devel
       state: present
+  - name: "Install usability tools"
+    dnf:
+      name: 
+        - gnome-tweaks
   - name: "install graphics tools"
     dnf:
       name:
