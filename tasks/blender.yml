@@ -1,0 +1,6 @@
+---
+- name: "Download Blender Tarball"
+  get_url:
+    url: "https://download.blender.org/release/Blender{{install_blender_version}}/blender-{{install_blender_version}}-linux-glibc{{install_blender_glibc_version}}-x86_64.tar.bz2"
+    dest: "/usr/local/src/blender-{{install_blender_version}}-stable.tar.bz2"
+    checksum: "{{install_blender_checksum}}"
