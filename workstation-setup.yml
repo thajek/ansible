@@ -108,7 +108,7 @@
   - name: "install audio applications"
     dnf:
       name:
-        - audacity
+        - audacity-freeworld
         - hydrogen
         - soundkonverter
         - pavucontrol
