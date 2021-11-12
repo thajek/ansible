@@ -99,6 +99,9 @@
         - ImageMagick
         - GraphicsMagick
         - openshot
+          # For iPhone HEIC images
+        - libheif
+        - gimp-heif-plugin
       state: present
   - name: "install nvidia driver from rpmfusion"
     dnf:
@@ -158,6 +161,7 @@
         - lshw
         - python3-ansible-lint
         - ansible
+        - python3-ansible-review
       state: present
   - name: "Create /snap symlink on Fedora to allow classic confinement snaps to install"
     file:
