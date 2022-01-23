@@ -164,6 +164,9 @@
         - python3-pygame
         - clamav
         - clamav-update
+          # Packages trying to get Logictech Magellan Space Mouse working
+          #        - spacenavd
+          #        - spnavcfg
         # Apparently ansible-review is no longer maintained and was dropped for F35 so removing.
         # https://src.fedoraproject.org/rpms/ansible-review/c/9d712ad49b47017499e996b7fed8962a607bc093?branch=f35
         # - python3-ansible-review
