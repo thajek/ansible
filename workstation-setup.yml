@@ -166,6 +166,7 @@
         - clamav-update
         # install v4l2loopback for obs virtual camera support (package from rpmfusion-free)
         - v4l2loopback
+        - mediainfo
           # Packages trying to get Logictech Magellan Space Mouse working
           #        - spacenavd
           #        - spnavcfg
