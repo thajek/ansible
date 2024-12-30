@@ -144,6 +144,7 @@
         - NetworkManager-openconnect-gnome
         - pyhoca-gui
         - pyhoca-cli
+        - p7zip
         - wireshark
         - inxi
         - apg
@@ -175,6 +176,8 @@
         # - python3-ansible-review
         # install wkhtmltopdf to make pdf reports from testssl.sh html output
          - wkhtmltopdf
+         - remove-retired-packages
+         - dracut-config-rescue
       state: present
   - name: "Create /snap symlink on Fedora to allow classic confinement snaps to install"
     file:
